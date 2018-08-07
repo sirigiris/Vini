@@ -18,24 +18,14 @@ io.on('connection',(socket)=>{
     socket.on('disconnect',()=>{
     console.log('disconnected from client');
     })
-    socket.emit('newEmail',{
-        from: 'hema@example.com',
-        text: 'hi',
-        createAt: 123
-    });
-
-    socket.emit('newMessage',{
-        from: 'naren@example.com',
-        text: 'new message sent',
-        createAt: '08/03/2018 9:00PM'
-    });
-
-    socket.on('createEmail', function(newemail){
-        console.log('createEmail:',newemail);
-    })
-
+  
     socket.on('createMessage', function(message){
-        console.log("createMessage:",message )
+        console.log("createMessage at Server:",message )
+        io.emit('newMessage',{
+            from:message.from,
+            text:message.text,
+            createAt: new Date().getTime()
+        });
     })
 });
 
